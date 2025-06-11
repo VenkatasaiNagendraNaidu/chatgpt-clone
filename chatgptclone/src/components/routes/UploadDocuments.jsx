@@ -6,37 +6,43 @@ import { toast } from 'react-toastify';
 const UploadDocuments = () => {
   const [fileName, setFileName] = useState('');
   const [fileUploaded, setFileUploaded] = useState(false);
+  const [fileNames, setFileNames] = useState([]);
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const uploaded = {
-          name: file.name,
-          content: reader.result,
-          uploadedAt: new Date().toISOString(),
-        };
-        const existing = JSON.parse(localStorage.getItem('uploadedDocs') || '[]');
-        existing.push(uploaded);
-        localStorage.setItem('uploadedDocs', JSON.stringify(existing));
-        setFileName(file.name);
-        setFileUploaded(true);
+const handleFileUpload = (e) => {
+  const files = Array.from(e.target.files);
+  const existing = JSON.parse(localStorage.getItem('uploadedDocs') || '[]');
+  const uploadedNames = [];
+
+  files.forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const uploaded = {
+        name: file.name,
+        content: reader.result,
+        uploadedAt: new Date().toISOString(),
       };
-      reader.readAsDataURL(file);
-    }
-  };
+      existing.push(uploaded);
+      localStorage.setItem('uploadedDocs', JSON.stringify(existing));
+    };
+    reader.readAsDataURL(file);
+    uploadedNames.push(file.name);
+    setFileUploaded(true);
+  });
+
+  setFileNames(prev => [...prev, ...uploadedNames]);
+};
+
+
 
   const handleAnalyze = () => {
     alert(`Analyzing content of: ${fileName}`);
-    // Placeholder: Add navigation or analysis logic here
   };
    const [uploads, setUploads] = useState([]);
   
     useEffect(() => {
       const storedDocs = JSON.parse(localStorage.getItem('uploadedDocs')) || [];
       setUploads(storedDocs);
-    }, []);
+    }, [fileUploaded]);
   
     const handleDelete = (index) => {
       const confirmToast = toast(
@@ -82,14 +88,22 @@ const UploadDocuments = () => {
         <input
           type="file"
           id="docUpload"
+          multiple
           onChange={handleFileUpload}
           className="hidden-input"
         />
       </label>
 
-      {fileName && (
-        <p className="upload-status">Uploaded: {fileName}</p>
-      )}
+     {fileNames.length > 0 && (
+  <div className="upload-status">
+    <p>Uploaded Files:</p>
+    <ul>
+      {fileNames.map((name, index) => (
+        <li key={index}>{name}</li>
+      ))}
+    </ul>
+  </div>
+)}
 
       {fileUploaded && (
         <button className="analyze-btn" onClick={handleAnalyze}>
@@ -98,7 +112,7 @@ const UploadDocuments = () => {
       )}
     </div>
     <div className="previous-uploads-container">
-      <h2>Previous Uploads</h2>
+      <h2>Uploads</h2>
       {uploads.length === 0 ? (
         <p>No documents uploaded yet.</p>
       ) : (

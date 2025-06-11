@@ -49,7 +49,7 @@ const Sidebar = () => {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 4V20M20 12H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           </svg>
-          <span>New chat</span>
+          <span>Chat with AI</span>
         </div>
 </Link>
 <Link to="/upload-docs">
