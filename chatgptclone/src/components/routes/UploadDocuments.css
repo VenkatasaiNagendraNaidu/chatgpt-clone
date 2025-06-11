@@ -1,7 +1,5 @@
 .upload-documents-container {
   padding: 30px;
-  max-width: 600px;
-  margin: auto;
   text-align: center;
   background-color: #f3f3f3;
   border-radius: 12px;
@@ -61,4 +59,3 @@
 .analyze-btn:hover {
   background-color: #666;
 }
-    
