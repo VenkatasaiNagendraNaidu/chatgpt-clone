@@ -1,0 +1,49 @@
+import React, { useState } from 'react';
+
+const ChatInput = () => {
+  const [inputValue, setInputValue] = useState('');
+
+  return (
+    <div className="input-container">
+      <div className="input-wrapper">
+        <input
+          type="text"
+          placeholder="Ask anything"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="chat-input"
+        />
+        <div className="input-actions">
+          <button className="input-btn tools-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M14.7 6.3A1 1 0 0 0 13 5H9A1 1 0 0 0 7.3 6.3L4.3 9.3A1 1 0 0 0 4 10V14A1 1 0 0 0 4.3 14.7L7.3 17.7A1 1 0 0 0 9 19H13A1 1 0 0 0 14.7 17.7L17.7 14.7A1 1 0 0 0 18 14V10A1 1 0 0 0 17.7 9.3L14.7 6.3Z" stroke="currentColor" strokeWidth="2"/>
+              <circle cx="11" cy="12" r="2" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+            <span className="tools-text">Tools</span>
+          </button>
+          <button className="input-btn attach-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M21.44 11.05L12.25 20.24C11.12 21.37 9.59 22 7.99 22C6.39 22 4.86 21.37 3.73 20.24C2.6 19.11 1.97 17.58 1.97 15.98C1.97 14.38 2.6 12.85 3.73 11.72L12.92 2.53C13.68 1.77 14.71 1.35 15.78 1.35C16.85 1.35 17.88 1.77 18.64 2.53C19.4 3.29 19.82 4.32 19.82 5.39C19.82 6.46 19.4 7.49 18.64 8.25L10.17 16.72C9.79 17.1 9.28 17.31 8.75 17.31C8.22 17.31 7.71 17.1 7.33 16.72C6.95 16.34 6.74 15.83 6.74 15.3C6.74 14.77 6.95 14.26 7.33 13.88L15.07 6.14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <button className="input-btn mic-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 1C10.34 1 9 2.34 9 4V12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12V4C15 2.34 13.66 1 12 1Z" stroke="currentColor" strokeWidth="2"/>
+              <path d="M19 10V12C19 16.42 15.42 20 11 20H13C17.42 20 21 16.42 21 12V10" stroke="currentColor" strokeWidth="2"/>
+              <line x1="12" y1="20" x2="12" y2="24" stroke="currentColor" strokeWidth="2"/>
+              <line x1="8" y1="24" x2="16" y2="24" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+          </button>
+          <button className={`input-btn send-btn ${!inputValue.trim() ? 'disabled' : ''}`} disabled={!inputValue.trim()}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <polygon points="22,2 15,22 11,13 2,9 22,2" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ChatInput;
