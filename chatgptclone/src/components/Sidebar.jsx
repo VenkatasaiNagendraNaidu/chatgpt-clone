@@ -1,7 +1,10 @@
-import React from 'react';
+import React,{useState} from 'react';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Sidebar = () => {
-  const chatHistory = [
+    const [chatHistory, setChatHistory] = useState([
     "How to center a div in CSS",
     "React component best practices",
     "JavaScript array methods",
@@ -12,8 +15,22 @@ const Sidebar = () => {
     "React hooks explained",
     "Git workflow strategies",
     "Web performance optimization"
-  ];
+  ]);
+  const [pendingDelete, setPendingDelete] = useState(null);
 
+  const handleDeleteClick = (index) => {
+    if (pendingDelete === index) {
+      setChatHistory(prev => prev.filter((_, i) => i !== index));
+      setPendingDelete(null);
+      toast.success("Chat deleted");
+    } else {
+      setPendingDelete(index);
+      toast.warn("Click again to confirm delete", { autoClose: 3000 });
+      setTimeout(() => {
+        setPendingDelete(null);
+      }, 2000);
+    }
+  };
   return (
     <div className="sidebar">
       <div className="sidebar-header">
@@ -36,17 +53,9 @@ const Sidebar = () => {
 
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-            <path d="21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
-          </svg>
-          <span>Search chats</span>
-        </div>
-
-        <div className="sidebar-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20V20H6.5A2.5 2.5 0 0 1 4 17.5V19.5Z" stroke="currentColor" strokeWidth="2"/>
           </svg>
-          <span>Library</span>
+          <span>Build AI Knowledge</span>
         </div>
 
         <div className="sidebar-item">
@@ -54,17 +63,38 @@ const Sidebar = () => {
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
             <polygon points="10,8 16,12 10,16" fill="currentColor"/>
           </svg>
-          <span>Sora</span>
+          <span>Analyze Images</span>
         </div>
 
         <div className="sidebar-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="3" width="7" height="7" stroke="currentColor" strokeWidth="2"/>
-            <rect x="14" y="3" width="7" height="7" stroke="currentColor" strokeWidth="2"/>
-            <rect x="14" y="14" width="7" height="7" stroke="currentColor" strokeWidth="2"/>
-            <rect x="3" y="14" width="7" height="7" stroke="currentColor" strokeWidth="2"/>
-          </svg>
-          <span>GPTs</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+  <path d="M12 16V8M8 12l4-4 4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M4 20h16V4H4v16z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+
+          <span>Upload Documents</span>
+        </div> <div className="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+  <path d="M3 6h6l2 2h10v10H3V6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+
+          <span>Previous Uploads</span>
+        </div>
+
+        <div className="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+  <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
+  <circle cx="8" cy="8" r="2" fill="currentColor"/>
+  <path d="M21 21l-6-6-3 3-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+
+          <span>Generate Images</span>
+        </div> <div className="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+  <path d="M15 10l5-3v10l-5-3v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+
+          <span>Generate Videos</span>
         </div>
 
         <div className="sidebar-section">
@@ -82,12 +112,13 @@ const Sidebar = () => {
                     <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
-                <button className="chat-option-btn">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                    <polyline points="3,6 5,6 21,6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
+                <button className="chat-option-btn" onClick={() => handleDeleteClick(index)}>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+    <polyline points="3,6 5,6 21,6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+</button>
+
               </div>
             </div>
           ))}

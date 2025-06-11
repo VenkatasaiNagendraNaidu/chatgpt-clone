@@ -1,6 +1,5 @@
 import React from 'react';
 import ChatInput from './ChatInput';
-
 const WelcomeSection = () => {
   return (
     <div className="welcome-section">
@@ -9,5 +8,4 @@ const WelcomeSection = () => {
     </div>
   );
 };
-
 export default WelcomeSection;
