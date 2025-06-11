@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
     const [chatHistory, setChatHistory] = useState([
@@ -44,20 +44,23 @@ const Sidebar = () => {
       </div>
 
       <div className="sidebar-content">
+  <Link to="/new-chat">
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 4V20M20 12H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           </svg>
           <span>New chat</span>
         </div>
-
+</Link>
+<Link to="/build-ai">
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20V20H6.5A2.5 2.5 0 0 1 4 17.5V19.5Z" stroke="currentColor" strokeWidth="2"/>
           </svg>
           <span>Build AI Knowledge</span>
         </div>
-
+</Link>
+  <Link to="/analyze-images">
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
@@ -65,7 +68,8 @@ const Sidebar = () => {
           </svg>
           <span>Analyze Images</span>
         </div>
-
+  </Link>
+  <Link to="/upload-docs" >
         <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
   <path d="M12 16V8M8 12l4-4 4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -73,14 +77,18 @@ const Sidebar = () => {
 </svg>
 
           <span>Upload Documents</span>
-        </div> <div className="sidebar-item">
+        </div> 
+  </Link>
+    <Link to="/previous-uploads" >
+        <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
   <path d="M3 6h6l2 2h10v10H3V6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
           <span>Previous Uploads</span>
         </div>
-
+    </Link>
+  <Link to="/generate-images">
         <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
   <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
@@ -89,13 +97,17 @@ const Sidebar = () => {
 </svg>
 
           <span>Generate Images</span>
-        </div> <div className="sidebar-item">
+        </div>
+  </Link>
+    <Link to="/generate-videos">
+         <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
   <path d="M15 10l5-3v10l-5-3v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
           <span>Generate Videos</span>
         </div>
+    </Link>
 
         <div className="sidebar-section">
           <div className="sidebar-section-title">Recent</div>

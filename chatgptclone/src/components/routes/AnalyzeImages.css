@@ -1,0 +1,64 @@
+.analyze-container {
+  padding: 2rem;
+  text-align: center;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #000000;
+  border: 2px solid #cada92;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+}
+
+.upload-btn:hover {
+  background-color: #d5d5d5;
+  transform: scale(1.02);
+}
+
+.hidden-input {
+  display: none;
+}
+
+.preview-section {
+  margin-top: 2rem;
+}
+
+.preview-title {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.image-preview {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+.preview-img-btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:2rem;
+}
+.preview-img-btn-i{
+    height: 3rem;
+    width: 90%;
+     display: inline-block;
+  padding: 12px 24px;
+  background-color: #868892;
+  border: 2px solid #cada92;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+}
