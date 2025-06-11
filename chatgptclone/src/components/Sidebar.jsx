@@ -52,7 +52,7 @@ const Sidebar = () => {
           <span>New chat</span>
         </div>
 </Link>
-<Link to="/build-ai">
+<Link to="/upload-docs">
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20V20H6.5A2.5 2.5 0 0 1 4 17.5V19.5Z" stroke="currentColor" strokeWidth="2"/>
@@ -69,7 +69,7 @@ const Sidebar = () => {
           <span>Analyze Images</span>
         </div>
   </Link>
-  <Link to="/upload-docs" >
+  {/* <Link to="/upload-docs" >
         <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
   <path d="M12 16V8M8 12l4-4 4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -78,8 +78,8 @@ const Sidebar = () => {
 
           <span>Upload Documents</span>
         </div> 
-  </Link>
-    <Link to="/previous-uploads" >
+  </Link> */}
+    {/* <Link to="/previous-uploads" >
         <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
   <path d="M3 6h6l2 2h10v10H3V6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -87,7 +87,7 @@ const Sidebar = () => {
 
           <span>Previous Uploads</span>
         </div>
-    </Link>
+    </Link> */}
   <Link to="/generate-images">
         <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
