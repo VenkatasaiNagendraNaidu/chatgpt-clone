@@ -46,7 +46,7 @@ const Sidebar = () => {
       </div>
 
       <div className="sidebar-content">
-  <Link to="/new-chat">
+  <Link className="sidebar-item" to="/new-chat">
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 4V20M20 12H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -54,7 +54,7 @@ const Sidebar = () => {
           <span>Chat with AI</span>
         </div>
 </Link>
-<Link to="/upload-docs">
+<Link className="sidebar-item" to="/upload-docs">
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20V20H6.5A2.5 2.5 0 0 1 4 17.5V19.5Z" stroke="currentColor" strokeWidth="2"/>
@@ -62,7 +62,7 @@ const Sidebar = () => {
           <span>Build AI Knowledge</span>
         </div>
 </Link>
-  <Link to="/analyze-images">
+  <Link className="sidebar-item" to="/analyze-images">
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
@@ -90,7 +90,7 @@ const Sidebar = () => {
           <span>Previous Uploads</span>
         </div>
     </Link> */}
-  <Link to="/generate-images">
+  <Link className="sidebar-item" to="/generate-images">
         <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
   <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
@@ -101,7 +101,7 @@ const Sidebar = () => {
           <span>Generate Images</span>
         </div>
   </Link>
-    <Link to="/generate-videos">
+    <Link className="sidebar-item" to="/generate-videos">
          <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
   <path d="M15 10l5-3v10l-5-3v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

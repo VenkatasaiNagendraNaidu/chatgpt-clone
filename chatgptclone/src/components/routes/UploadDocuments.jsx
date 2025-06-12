@@ -57,32 +57,6 @@ const UploadDocuments = () => {
     toast.success("File(s) uploaded to S3");
   };
 
-  // const handleDelete = (index) => {
-  //   toast(
-  //     <div>
-  //       <p>Are you sure you want to delete this file?</p>
-  //       <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
-  //         <button
-  //           onClick={() => {
-  //             const updated = [...uploads];
-  //             updated.splice(index, 1);
-  //             localStorage.setItem('uploadedDocs', JSON.stringify(updated));
-  //             setUploads(updated);
-  //             toast.dismiss();
-  //             toast.success('File deleted successfully!');
-  //           }}
-  //           style={{ padding: '4px 8px', background: 'red', color: '#fff', border: 'none' }}
-  //         >
-  //           Yes
-  //         </button>
-  //         <button onClick={() => toast.dismiss()} style={{ padding: '4px 8px' }}>
-  //           No
-  //         </button>
-  //       </div>
-  //     </div>,
-  //     { autoClose: false }
-  //   );
-  // };
   return (
     <div className="upload-documents-container">
       <h2 className="upload-heading">Uploaded Documents</h2>
@@ -93,7 +67,6 @@ const UploadDocuments = () => {
           {uploads.map((doc, index) => (
             <li key={index} className="upload-item">
               <a href={doc.content} target="_blank" rel="noopener noreferrer" className="upload-link">{doc.name}</a>
-              {/* <button className="delete-btn" onClick={() => handleDelete(index)}>Delete</button> */}
             </li>
           ))}
         </ul>
