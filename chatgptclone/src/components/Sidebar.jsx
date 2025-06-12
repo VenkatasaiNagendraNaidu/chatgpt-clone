@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import LOGO from './routes/logos.png';
 
 const Sidebar = () => {
     const [chatHistory, setChatHistory] = useState([
@@ -34,13 +35,14 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <div className="logo">
+        <img className='sidebar-header-logo' src={LOGO} alt="" />
+        {/* <div className="logo">
           <div className="logo-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" fill="currentColor"/>
             </svg>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="sidebar-content">
@@ -137,7 +139,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="sidebar-footer">
+      {/* <div className="sidebar-footer">
         <div className="upgrade-section">
           <div className="upgrade-item">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -149,7 +151,7 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

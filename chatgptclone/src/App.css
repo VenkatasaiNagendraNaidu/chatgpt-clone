@@ -36,14 +36,16 @@ body::-webkit-scrollbar,
   }
   
   .sidebar-header {
+    background: WHITE;
     display: flex;
     height: 4rem;
     align-items: center;
-    /* justify-content: center; */
-    padding: 12px 16px;
+    justify-content: center;
     border-bottom: 1px solid #2f2f2f;
   }
-  
+  .sidebar-header-logo{
+    height: 5rem;
+  }
   .logo {
     display: flex;
     align-items: center;
