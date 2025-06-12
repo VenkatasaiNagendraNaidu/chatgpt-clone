@@ -46,9 +46,9 @@ const GenerateVideos = () => {
             <source src={videoUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          <div className="download-icon" onClick={handleDownload} title="Download Video">
+          {/* <div className="download-icon" onClick={handleDownload} title="Download Video">
             <FiDownload size={20} />
-          </div>
+          </div> */}
         </div>
       )}
       <div className="input-section">

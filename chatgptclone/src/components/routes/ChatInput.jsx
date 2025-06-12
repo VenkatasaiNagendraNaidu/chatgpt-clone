@@ -10,28 +10,41 @@ const ChatInput = () => {
 
   if (!hasInputStarted) setHasInputStarted(true);
 
-  // Push user message
   setMessages((prev) => [...prev, { type: 'user', text: inputValue }]);
 
-  const userMessage = inputValue; // store the message
+  const userMessage = inputValue;
   setInputValue('');
 
-  try {
-    // ✅ Replace URL with your actual API endpoint
-    const response = await fetch('http://localhost:5000/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message: userMessage }),
-    });
+try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBoRXgh7IKbvJ70RH8zadgakueDvnlpBLM`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                {
+                  text: userMessage,
+                },
+              ],
+            },
+          ],
+        }),
+      }
+    );
 
     const data = await response.json();
 
-    // ✅ Assuming response looks like { reply: "Some message" }
+    const botReply =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini.';
+
     setMessages((prev) => [
       ...prev,
-      { type: 'bot', text: data.reply || 'No response from bot.' },
+      { type: 'bot', text: botReply },
     ]);
   } catch (error) {
     console.error('Error calling API:', error);

@@ -5,7 +5,6 @@ import axios from 'axios';
 
 const UploadDocuments = () => {
   const [uploads, setUploads] = useState([]);
-  const [prompt, setPrompt] = useState('');
   const [fileUploaded, setFileUploaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -17,8 +16,6 @@ const UploadDocuments = () => {
   const uploadToS3 = async (file) => {
     try {
       const { data } = await axios.get(`/api/s3-presigned-url?filename=${file.name}`);
-
-      // Upload to S3
       await axios.put(data.url, file, {
         headers: {
           'Content-Type': file.type,
@@ -60,44 +57,32 @@ const UploadDocuments = () => {
     toast.success("File(s) uploaded to S3");
   };
 
-  const handleDelete = (index) => {
-    toast(
-      <div>
-        <p>Are you sure you want to delete this file?</p>
-        <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
-          <button
-            onClick={() => {
-              const updated = [...uploads];
-              updated.splice(index, 1);
-              localStorage.setItem('uploadedDocs', JSON.stringify(updated));
-              setUploads(updated);
-              toast.dismiss();
-              toast.success('File deleted successfully!');
-            }}
-            style={{ padding: '4px 8px', background: 'red', color: '#fff', border: 'none' }}
-          >
-            Yes
-          </button>
-          <button onClick={() => toast.dismiss()} style={{ padding: '4px 8px' }}>
-            No
-          </button>
-        </div>
-      </div>,
-      { autoClose: false }
-    );
-  };
-
-  const handlePromptSearch = async () => {
-    try {
-      const response = await axios.post('/api/search-doc', { prompt });
-      console.log("Search Result:", response.data);
-      toast.success("Search completed");
-      // Optionally show results below
-    } catch (err) {
-      toast.error("Failed to retrieve data");
-    }
-  };
-
+  // const handleDelete = (index) => {
+  //   toast(
+  //     <div>
+  //       <p>Are you sure you want to delete this file?</p>
+  //       <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+  //         <button
+  //           onClick={() => {
+  //             const updated = [...uploads];
+  //             updated.splice(index, 1);
+  //             localStorage.setItem('uploadedDocs', JSON.stringify(updated));
+  //             setUploads(updated);
+  //             toast.dismiss();
+  //             toast.success('File deleted successfully!');
+  //           }}
+  //           style={{ padding: '4px 8px', background: 'red', color: '#fff', border: 'none' }}
+  //         >
+  //           Yes
+  //         </button>
+  //         <button onClick={() => toast.dismiss()} style={{ padding: '4px 8px' }}>
+  //           No
+  //         </button>
+  //       </div>
+  //     </div>,
+  //     { autoClose: false }
+  //   );
+  // };
   return (
     <div className="upload-documents-container">
       <h2 className="upload-heading">Uploaded Documents</h2>
@@ -108,28 +93,13 @@ const UploadDocuments = () => {
           {uploads.map((doc, index) => (
             <li key={index} className="upload-item">
               <a href={doc.content} target="_blank" rel="noopener noreferrer" className="upload-link">{doc.name}</a>
-              <button className="delete-btn" onClick={() => handleDelete(index)}>Delete</button>
+              {/* <button className="delete-btn" onClick={() => handleDelete(index)}>Delete</button> */}
             </li>
           ))}
         </ul>
       )}
 
-      {/* Input Row */}
       <div className="input-row">
-        <input
-          type="text"
-          placeholder="Ask something about your documents..."
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  handlePromptSearch();
-                }
-              }}
-          className="prompt-input"
-        />
-
         <label htmlFor="docUpload" className="upload-doc-btn">
           Upload
           <input
@@ -140,10 +110,6 @@ const UploadDocuments = () => {
             className="hidden-input"
           />
         </label>
-
-        <button className="generate-btn" onClick={handlePromptSearch} disabled={!prompt || isUploading}>
-          Enter
-        </button>
       </div>
 
       {isUploading && <p className="uploading-status">Uploading to S3...</p>}

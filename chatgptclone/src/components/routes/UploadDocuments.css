@@ -68,7 +68,7 @@
 
 
 .input-row {
-  width: 90%;
+  width: 20%;
   display: flex;
     position: relative;
     background-color: #2f2f2f;
@@ -98,6 +98,7 @@
 
 .upload-doc-btn,
 .analyze-btn {
+  width: 100%;
   background-color: #1976d2;
   color: white;
   padding: 8px 14px;

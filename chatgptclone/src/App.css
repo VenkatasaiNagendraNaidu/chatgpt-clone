@@ -288,7 +288,7 @@ body::-webkit-scrollbar,
     max-width: 100%;
   }
    .new-chat-container {
-     height: 100vh;
+     height: 80vh;
     display: flex;
     align-items: center;
     flex-direction: column;

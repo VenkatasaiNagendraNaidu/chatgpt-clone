@@ -1,5 +1,6 @@
 .generate-videos-container {
   padding: 20px;
+  width: 50vw;
   color: #fff;
   display: flex;
   flex-direction: column;
