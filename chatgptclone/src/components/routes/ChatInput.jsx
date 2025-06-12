@@ -1,31 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 
 const ChatInput = () => {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
   const [hasInputStarted, setHasInputStarted] = useState(false);
 
-  const handleSend = () => {
-    if (!inputValue.trim()) return;
-  
-    if (!hasInputStarted) {
-      setHasInputStarted(true);
+ const handleSend = async () => {
+  if (!inputValue.trim()) return;
+
+  if (!hasInputStarted) setHasInputStarted(true);
+
+  // Push user message
+  setMessages((prev) => [...prev, { type: 'user', text: inputValue }]);
+
+  const userMessage = inputValue; // store the message
+  setInputValue('');
+
+  try {
+    // ✅ Replace URL with your actual API endpoint
+    const response = await fetch('http://localhost:5000/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: userMessage }),
+    });
+
+    const data = await response.json();
+
+    // ✅ Assuming response looks like { reply: "Some message" }
+    setMessages((prev) => [
+      ...prev,
+      { type: 'bot', text: data.reply || 'No response from bot.' },
+    ]);
+  } catch (error) {
+    console.error('Error calling API:', error);
+    setMessages((prev) => [
+      ...prev,
+      { type: 'bot', text: 'Sorry, something went wrong!' },
+    ]);
+  }
+};
+    const bottomRef = useRef(null);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+  }, [messages]);
+
   
-    setMessages((prev) => [...prev, { type: 'user', text: inputValue }]);
-  
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { type: 'bot', text: 'Hey there! Hold up \n Will be there soon' }
-      ]);
-    }, 500);
-  
-    setInputValue('');
-  };
+
   
   return (
-    <div className="chat-container">
+    <div className="new-chat-container">
+      <h1 className="welcome-title">What are you working on?</h1>
     {hasInputStarted && (
   <div className="messages-container">
     {messages.map((msg, idx) => (
@@ -38,17 +67,24 @@ const ChatInput = () => {
         ))}
       </div>
     ))}
+    <div ref={bottomRef} />
   </div>
 )}
       <div className="input-container">
         <div className="input-wrapper">
           <input
-            type="text"
-            placeholder="Ask anything"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="chat-input"
-          />
+              type="text"
+              placeholder="Ask anything"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              className="chat-input"
+            />
           <div className="input-actions">
             <button className="input-btn tools-btn">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">

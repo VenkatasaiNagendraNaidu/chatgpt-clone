@@ -57,6 +57,12 @@ const GenerateVideos = () => {
           placeholder="Bring life to your thoughts....!"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleGenerate();
+                }
+              }}
           className="chat-inputs"
         />
         <button className="generate-btn" onClick={handleGenerate}>

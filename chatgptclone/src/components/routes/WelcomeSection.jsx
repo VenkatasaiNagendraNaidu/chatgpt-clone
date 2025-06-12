@@ -3,7 +3,7 @@ import ChatInput from './ChatInput';
 const WelcomeSection = () => {
   return (
     <div className="welcome-section">
-      <h1 className="welcome-title">What are you working on?</h1>
+      {/* <h1 className="welcome-title">What are you working on?</h1> */}
       <ChatInput />
     </div>
   );
