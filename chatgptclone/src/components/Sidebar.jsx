@@ -62,7 +62,7 @@ const Sidebar = () => {
           <span>Build AI Knowledge</span>
         </div>
 </Link>
-  <Link className="sidebar-item" to="/analyze-images">
+  {/* <Link className="sidebar-item" to="/analyze-images">
         <div className="sidebar-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
@@ -70,7 +70,7 @@ const Sidebar = () => {
           </svg>
           <span>Analyze Images</span>
         </div>
-  </Link>
+  </Link> */}
   {/* <Link to="/upload-docs" >
         <div className="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
