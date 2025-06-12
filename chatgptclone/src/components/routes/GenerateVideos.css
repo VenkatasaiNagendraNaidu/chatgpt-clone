@@ -45,3 +45,75 @@
   background: rgba(0, 0, 0, 0.8);
 }
 
+.generate-videos-container {
+  height: 60%;
+  width: 70%;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+
+.user-msg {
+  align-self: flex-end;
+  background-color: #daf1ff;
+  color: #0a2a43;
+  border-top-right-radius: 0;
+  animation-name: slideInUser;
+}
+
+.bot-msg {
+  align-self: flex-start;
+  background-color: #e6e6e6;
+  color: #333;
+  border-top-left-radius: 0;
+  animation-name: slideInBot;
+}
+
+@keyframes slideInUser {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInBot {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.loading-dot {
+  font-style: italic;
+  color: #777;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+

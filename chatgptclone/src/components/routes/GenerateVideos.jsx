@@ -1,56 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './GenerateVideos.css';
 import { FiDownload } from 'react-icons/fi';
 import axios from 'axios';
 
 const GenerateVideos = () => {
   const [inputValue, setInputValue] = useState('');
-  const [videoUrl, setVideoUrl] = useState('https://www.w3schools.com/html/mov_bbb.mp4');
+  const [videoUrl, setVideoUrl] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const bottomRef = useRef(null);
 
-  const handleGenerate = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/generate-video', {
-        prompt: inputValue,
-      });
+ const handleGenerate = async () => {
+  const prompt = inputValue.trim();
+  if (!prompt) return;
 
-      if (response.data && response.data.videoUrl) {
-        setVideoUrl(response.data.videoUrl);
-      }
-    } catch (error) {
-      console.error('Error generating video:', error);
-    }
-  };
-  const handleDownload = async () => {
+  setInputValue('');
+  setMessages((prev) => [...prev, { type: 'user', content: prompt }]);
+  setLoading(true);
+
   try {
-    const response = await fetch(videoUrl);
-    const blob = await response.blob();
-    const blobUrl = window.URL.createObjectURL(blob);
+    const response = await axios.post(
+      'http://localhost:5000/generate-video',
+      { prompt },
+      { responseType: 'blob' } // IMPORTANT for raw bytes
+    );
+
+    const blob = new Blob([response.data], { type: 'video/mp4' });
+    const videoBlobUrl = URL.createObjectURL(blob);
+    setVideoUrl(videoBlobUrl);
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        type: 'bot',
+        content: (
+          <div className="video-wrapper">
+            <video controls className="generated-video">
+              <source src={videoBlobUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <div
+              className="download-icon"
+              onClick={() => handleDownload(videoBlobUrl)}
+              title="Download Video"
+            >
+              <FiDownload size={20} />
+            </div>
+          </div>
+        )
+      }
+    ]);
+  } catch (error) {
+    console.error('Error generating video:', error);
+    setMessages((prev) => [
+      ...prev,
+      { type: 'bot', content: 'Something went wrong. Please try again later.' }
+    ]);
+  }
+
+  setLoading(false);
+};
+
+const handleDownload = async (blobUrl) => {
+  try {
     const link = document.createElement('a');
     link.href = blobUrl;
     link.download = 'generated_video.mp4';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    window.URL.revokeObjectURL(blobUrl);
+    URL.revokeObjectURL(blobUrl);
   } catch (error) {
-    console.error("Download failed:", error);
+    console.error('Download failed:', error);
   }
 };
 
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, loading]);
+
   return (
     <div className="generate-videos-container">
-      {videoUrl && (
-        <div className="video-wrapper">
-          <video controls className="generated-video">
-            <source src={videoUrl} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          {/* <div className="download-icon" onClick={handleDownload} title="Download Video">
-            <FiDownload size={20} />
-          </div> */}
+      <h2 style={{color:'black'}}>Generate Your Creative Videos</h2>
+
+       <div className="messages-container">
+
+      {messages.map((msg, idx) => (
+        <div key={idx} className={`message ${msg.type === 'user' ? 'user-msg' : 'bot-msg'}`}>
+          {typeof msg.content === 'string' ? <p>{msg.content}</p> : msg.content}
+        </div>
+      ))}
+      {loading && (
+        <div className="message bot-msg">
+          <p className="loading-dot">Generating video...</p>
         </div>
       )}
+      <div ref={bottomRef} />
+      </div>
       <div className="input-section">
         <input
           type="text"
@@ -58,11 +105,11 @@ const GenerateVideos = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  handleGenerate();
-                }
-              }}
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleGenerate();
+            }
+          }}
           className="chat-inputs"
         />
         <button className="generate-btn" onClick={handleGenerate}>

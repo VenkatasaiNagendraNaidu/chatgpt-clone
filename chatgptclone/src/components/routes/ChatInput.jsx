@@ -85,21 +85,43 @@ try {
 )}
       <div className="input-container">
         <div className="input-wrapper">
-          <input
-              type="text"
-              placeholder="Ask anything"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  handleSend();
-                }
-              }}
-              className="chat-input"
-            />
+          <textarea
+  placeholder="Ask anything"
+  value={inputValue}
+  onChange={(e) => {
+    setInputValue(e.target.value);
+    // Auto expand height
+    e.target.style.height = 'auto';
+    e.target.style.height = Math.min(e.target.scrollHeight, 132) + 'px'; // 132px = 5 lines
+  }}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  }}
+  className="chat-textarea"
+/>
           <div className="input-actions">
-            <button className="input-btn tools-btn">
+   
+            <button
+              className={`input-btn send-btn ${!inputValue.trim() ? 'disabled' : ''}`}
+              disabled={!inputValue.trim()}
+              onClick={handleSend}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <polygon points="22,2 15,22 11,13 2,9 22,2" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default ChatInput;
+         {/* <button className="input-btn tools-btn">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                 <path d="M14.7 6.3A1 1 0 0 0 13 5H9A1 1 0 0 0 7.3 6.3L4.3 9.3A1 1 0 0 0 4 10V14A1 1 0 0 0 4.3 14.7L7.3 17.7A1 1 0 0 0 9 19H13A1 1 0 0 0 14.7 17.7L17.7 14.7A1 1 0 0 0 18 14V10A1 1 0 0 0 17.7 9.3L14.7 6.3Z" stroke="currentColor" strokeWidth="2"/>
                 <circle cx="11" cy="12" r="2" stroke="currentColor" strokeWidth="2"/>
@@ -140,21 +162,4 @@ try {
                 <line x1="12" y1="20" x2="12" y2="24" stroke="currentColor" strokeWidth="2" />
                 <line x1="8" y1="24" x2="16" y2="24" stroke="currentColor" strokeWidth="2" />
               </svg>
-            </button>
-            <button
-              className={`input-btn send-btn ${!inputValue.trim() ? 'disabled' : ''}`}
-              disabled={!inputValue.trim()}
-              onClick={handleSend}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <polygon points="22,2 15,22 11,13 2,9 22,2" fill="currentColor"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-export default ChatInput;
+            </button> */}

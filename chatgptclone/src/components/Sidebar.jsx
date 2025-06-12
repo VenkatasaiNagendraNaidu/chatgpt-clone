@@ -111,7 +111,7 @@ const Sidebar = () => {
         </div>
     </Link>
 
-        <div className="sidebar-section">
+        {/* <div className="sidebar-section">
           <div className="sidebar-section-title">Recent</div>
           {chatHistory.map((chat, index) => (
             <div key={index} className="chat-history-item">
@@ -136,7 +136,7 @@ const Sidebar = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* <div className="sidebar-footer">
