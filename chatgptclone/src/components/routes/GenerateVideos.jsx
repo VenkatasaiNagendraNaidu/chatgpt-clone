@@ -9,10 +9,15 @@ const GenerateVideos = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
+   const textareaRef = useRef(null);
 
  const handleGenerate = async () => {
   const prompt = inputValue.trim();
   if (!prompt) return;
+  
+  if (textareaRef.current) {
+      textareaRef.current.style.height = '70px';
+  }
 
   setInputValue('');
   setMessages((prev) => [...prev, { type: 'user', content: prompt }]);
@@ -99,6 +104,30 @@ const handleDownload = async (blobUrl) => {
       <div ref={bottomRef} />
       </div>
       <div className="input-section">
+      <textarea
+        ref={textareaRef}
+        placeholder="Bring life to your thoughts....!"
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          e.target.style.height = 'auto';
+          e.target.style.height = Math.min(e.target.scrollHeight, 132) + 'px'; // Limit to 5 lines
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleGenerate();
+          }
+        }}
+        className="chat-inputs"
+      />
+      <button className="generate-btn" onClick={handleGenerate}>
+        Generate
+      </button>
+    </div>
+
+
+      {/* <div className="input-section">
         <input
           type="text"
           placeholder="Bring life to your thoughts....!"
@@ -115,7 +144,7 @@ const handleDownload = async (blobUrl) => {
         <button className="generate-btn" onClick={handleGenerate}>
           Generate
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

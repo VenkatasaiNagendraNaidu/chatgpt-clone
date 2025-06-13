@@ -14,6 +14,10 @@ const ChatInput = () => {
 
   const userMessage = inputValue;
   setInputValue('');
+    const textarea = document.querySelector('.chat-textarea');
+  if (textarea) {
+    textarea.style.height = '55px'; // Reset to initial height (min-height)
+  }
 
 try {
     const response = await fetch(
@@ -90,9 +94,8 @@ try {
   value={inputValue}
   onChange={(e) => {
     setInputValue(e.target.value);
-    // Auto expand height
     e.target.style.height = 'auto';
-    e.target.style.height = Math.min(e.target.scrollHeight, 132) + 'px'; // 132px = 5 lines
+    e.target.style.height = Math.min(e.target.scrollHeight, 55) + 'px';
   }}
   onKeyDown={(e) => {
     if (e.key === 'Enter' && !e.shiftKey) {

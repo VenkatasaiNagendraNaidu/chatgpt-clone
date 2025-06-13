@@ -18,9 +18,9 @@ function MainContent() {
       <Routes>
         <Route path="/new-chat" element={<NewChat />} />
         <Route path="/build-ai" element={<BuildAIKnowledge />} />
-        <Route path="/analyze-images" element={<AnalyzeImages />} />
+        {/* <Route path="/analyze-images" element={<AnalyzeImages />} /> */}
         <Route path="/upload-docs" element={<UploadDocuments />} />
-        <Route path="/previous-uploads" element={<PreviousUploads />} />
+        {/* <Route path="/previous-uploads" element={<PreviousUploads />} /> */}
         <Route path="/generate-images" element={<GenerateImages />} />
         <Route path="/generate-videos" element={<GenerateVideos />} />
         <Route path="/" element={<NewChat />} />

@@ -8,12 +8,16 @@ const GenerateImages = () => {
   const [messages, setMessages] = useState([]); // Stores chat-style user/image messages
   const bottomRef = useRef(null);
   const [loading, setLoading] = useState(false);
+   const textareaRef = useRef(null);
 
 
 const handleGenerate = async () => {
   const trimmedInput = inputValue.trim();
   if (!trimmedInput) return;
-
+  
+  if (textareaRef.current) {
+      textareaRef.current.style.height = '70px'; // Reset to initial min-height
+    }
   // Add user input message and clear input immediately
   setMessages((prev) => [...prev, { type: 'user', content: trimmedInput }]);
   setInputValue('');
@@ -104,23 +108,27 @@ const handleGenerate = async () => {
       </div>
 
       <div className="input-section">
-        <input
-          type="text"
-          placeholder="Bring your Idea to life...!"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              handleGenerate();
-            }
-          }}
-          className="chat-inputs"
-        />
-        <button className="generate-btn" onClick={handleGenerate}>
-          Generate
-        </button>
-      </div>
+      <textarea
+        ref={textareaRef}
+        placeholder="Bring your Idea to life...!"
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          e.target.style.height = 'auto';
+          e.target.style.height = Math.min(e.target.scrollHeight, 132) + 'px'; // Limit to 5 lines
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleGenerate();
+          }
+        }}
+        className="chat-inputs"
+      />
+      <button className="generate-btn" onClick={handleGenerate}>
+        Generate
+      </button>
+    </div>
     </div>
   );
 };
