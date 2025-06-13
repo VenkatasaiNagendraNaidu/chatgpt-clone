@@ -16,7 +16,7 @@ const ChatInput = () => {
   setInputValue('');
     const textarea = document.querySelector('.chat-textarea');
   if (textarea) {
-    textarea.style.height = '55px'; // Reset to initial height (min-height)
+    textarea.style.height = '55px';
   }
 
 try {
@@ -71,7 +71,9 @@ try {
   
   return (
     <div className="new-chat-container">
-      <h1 className="welcome-title">What are you working on?</h1>
+      {!hasInputStarted && (
+        <h1 className="welcome-title">What are you working on?</h1>
+      )}
     {hasInputStarted && (
   <div className="messages-container">
     {messages.map((msg, idx) => (

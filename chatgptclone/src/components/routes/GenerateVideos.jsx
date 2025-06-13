@@ -9,14 +9,16 @@ const GenerateVideos = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
-   const textareaRef = useRef(null);
+  const textareaRef = useRef(null);
+  const [hasInputStarted, setHasInputStarted] = useState(false);
+   
 
  const handleGenerate = async () => {
+  setHasInputStarted(true)
   const prompt = inputValue.trim();
   if (!prompt) return;
-  
   if (textareaRef.current) {
-      textareaRef.current.style.height = '70px';
+      textareaRef.current.style.height = '55px';
   }
 
   setInputValue('');
@@ -27,7 +29,7 @@ const GenerateVideos = () => {
     const response = await axios.post(
       'http://localhost:5000/generate-video',
       { prompt },
-      { responseType: 'blob' } // IMPORTANT for raw bytes
+      { responseType: 'blob' }
     );
 
     const blob = new Blob([response.data], { type: 'video/mp4' });
@@ -87,9 +89,12 @@ const handleDownload = async (blobUrl) => {
 
   return (
     <div className="generate-videos-container">
-      <h2 style={{color:'black'}}>Generate Your Creative Videos</h2>
+      {!hasInputStarted && (
+        <h2 className='welcome-title'>Generate Your Creative Videos</h2>
+      )}
+{hasInputStarted && (
 
-       <div className="messages-container">
+  <div className="messages-container">
 
       {messages.map((msg, idx) => (
         <div key={idx} className={`message ${msg.type === 'user' ? 'user-msg' : 'bot-msg'}`}>
@@ -103,7 +108,9 @@ const handleDownload = async (blobUrl) => {
       )}
       <div ref={bottomRef} />
       </div>
-      <div className="input-section">
+        )}
+      <div className='input-container'>
+      <div className="input-wrapper">
       <textarea
         ref={textareaRef}
         placeholder="Bring life to your thoughts....!"
@@ -111,7 +118,7 @@ const handleDownload = async (blobUrl) => {
         onChange={(e) => {
           setInputValue(e.target.value);
           e.target.style.height = 'auto';
-          e.target.style.height = Math.min(e.target.scrollHeight, 132) + 'px'; // Limit to 5 lines
+          e.target.style.height = Math.min(e.target.scrollHeight, 55) + 'px';
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !e.shiftKey) {
@@ -119,11 +126,22 @@ const handleDownload = async (blobUrl) => {
             handleGenerate();
           }
         }}
-        className="chat-inputs"
+        className="chat-textarea"
       />
-      <button className="generate-btn" onClick={handleGenerate}>
-        Generate
-      </button>
+      <div className="input-actions">
+   
+            <button
+              className={`input-btn send-btn ${!inputValue.trim() ? 'disabled' : ''}`}
+              disabled={!inputValue.trim()}
+              onClick={handleGenerate}
+              >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <polygon points="22,2 15,22 11,13 2,9 22,2" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+                </div>
     </div>
 
 

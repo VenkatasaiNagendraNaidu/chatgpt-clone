@@ -5,23 +5,25 @@ import { FiDownload } from 'react-icons/fi';
 
 const GenerateImages = () => {
   const [inputValue, setInputValue] = useState('');
-  const [messages, setMessages] = useState([]); // Stores chat-style user/image messages
+  const [hasInputStarted, setHasInputStarted] = useState(false);
+  
+  const [messages, setMessages] = useState([]);
   const bottomRef = useRef(null);
   const [loading, setLoading] = useState(false);
-   const textareaRef = useRef(null);
+  const textareaRef = useRef(null);
 
 
 const handleGenerate = async () => {
+  setHasInputStarted(true)
   const trimmedInput = inputValue.trim();
   if (!trimmedInput) return;
   
   if (textareaRef.current) {
-      textareaRef.current.style.height = '70px'; // Reset to initial min-height
+      textareaRef.current.style.height = '55px';
     }
-  // Add user input message and clear input immediately
   setMessages((prev) => [...prev, { type: 'user', content: trimmedInput }]);
   setInputValue('');
-  setLoading(true); // start loading
+  setLoading(true);
 
   try {
     const response = await axios.post('http://localhost:5000/generate-image', {
@@ -68,7 +70,7 @@ const handleGenerate = async () => {
     ]);
   }
 
-  setLoading(false); // stop loading
+  setLoading(false);
 };
 
 
@@ -82,15 +84,18 @@ const handleGenerate = async () => {
     document.body.removeChild(link);
   };
 
-  // Auto scroll to bottom when messages update
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
     <div className="generate-images-container">
-      <h2 style={{color:'black'}}>Generate Your Creative Images</h2>
-       <div className="messages-container">
+       {!hasInputStarted && (
+         <h2 className='welcome-title'>Generate Your Creative Images</h2>
+       )}
+    {hasInputStarted && (
+
+      <div className="messages-container">
 
       {messages.map((msg, idx) => (
         <div key={idx} className={`message ${msg.type === 'user' ? 'user-msg' : 'bot-msg'}`}>
@@ -106,8 +111,9 @@ const handleGenerate = async () => {
 
       <div ref={bottomRef} />
       </div>
-
-      <div className="input-section">
+    )}
+      <div className='input-container'>
+      <div className="input-wrapper">
       <textarea
         ref={textareaRef}
         placeholder="Bring your Idea to life...!"
@@ -115,7 +121,7 @@ const handleGenerate = async () => {
         onChange={(e) => {
           setInputValue(e.target.value);
           e.target.style.height = 'auto';
-          e.target.style.height = Math.min(e.target.scrollHeight, 132) + 'px'; // Limit to 5 lines
+          e.target.style.height = Math.min(e.target.scrollHeight, 55) + 'px';
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !e.shiftKey) {
@@ -123,11 +129,22 @@ const handleGenerate = async () => {
             handleGenerate();
           }
         }}
-        className="chat-inputs"
-      />
-      <button className="generate-btn" onClick={handleGenerate}>
-        Generate
-      </button>
+        className="chat-textarea"
+        />
+      <div className="input-actions">
+   
+            <button
+              className={`input-btn send-btn ${!inputValue.trim() ? 'disabled' : ''}`}
+              disabled={!inputValue.trim()}
+              onClick={handleGenerate}
+              >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <polygon points="22,2 15,22 11,13 2,9 22,2" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+    </div>
     </div>
     </div>
   );
